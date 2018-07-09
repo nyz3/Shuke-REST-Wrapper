@@ -5,7 +5,13 @@
 
 package APIImageProcessing;
 
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Base64;
+
+import javax.imageio.ImageIO;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImageProcessingBaiduOCR {
@@ -55,6 +61,11 @@ public class ImageProcessingBaiduOCR {
 		}
 	}
 	
+	/**
+	 * 2. Find the size of the photo to prevent excessive uploads (max. 4 megabytes).
+	 * @return
+	 *     - True if file is under 4 MB., false otherwise.
+	 */
 	public static boolean properSize() {
 		
 		double numBytes = imageBytes.length;
@@ -66,28 +77,82 @@ public class ImageProcessingBaiduOCR {
 		}
 	}
 	
+	/**
+	 * 3. Ensure image file is .jpg, .png, or .bmp
+	 * @param inputEncoding
+	 *     - String to check for proper file extension (.jpg, .png, or .bmp).
+	 * @return
+	 *     - True if file extension of image is .jpg, .png, or .bmp
+	 */
 	public static boolean properType() {
 		
 		String hexString = bytesToHex(imageBytes);
-		String prefix = hexString.substring(0,8);
-		String prefixTwo = hexString.substring(12,24);
+		String prefixBMP = hexString.substring(0,4);
+		String prefixJPG = hexString.substring(0,8);
+		String prefixJPGTwo = hexString.substring(12,24);
 		String prefixPNG = hexString.substring(0,16);
 		
-		if(prefix.equals("FFD8FFDB")) {		//.jpg, .jpeg
+		if(prefixJPG.equals("FFD8FFDB")) {		//.jpg, .jpeg
 			return true;
-		} else if(prefix.equals("FFD8FFE0") && prefixTwo.equals("4A4649460001")) {
+		} else if(prefixJPG.equals("FFD8FFE0") && prefixJPGTwo.equals("4A4649460001")) {
 			return true;
-		} else if(prefix.equals("FFD8FFE1") && prefixTwo.equals("457869660000")) {
+		} else if(prefixJPG.equals("FFD8FFE1") && prefixJPGTwo.equals("457869660000")) {
 			return true;
 		} else if(prefixPNG.equals("89504E470D0A1A0A")) {	 //.png				
+			return true;
+		} else if(prefixBMP.equals("424D")) {	//.bmp
 			return true;
 		} else {
 			return false;
 		}
-		
 	}
 	
+	/**
+	 * Makes sure that dimensions of the processed Image are within bounds of 15-4096 pixels
+	 * for height and width.
+	 * @return
+	 * 	- whether dimensions are in the proper range.
+	 */
 	public static boolean properDimensions() {
-		return true;
+		
+		ByteArrayInputStream byteStream = new ByteArrayInputStream(imageBytes);
+		Image image = null;
+		int imageWidth;
+		int imageHeight;
+		
+		try {
+			image = ImageIO.read(byteStream);
+		} catch (IOException e) {
+			System.out.println("Image could not be represented as an Image Object.");
+			return false;
+		}
+		
+		imageWidth = image.getWidth(null);
+		imageHeight = image.getHeight(null);
+		
+		if(imageWidth >= 15 && imageHeight >= 15) {
+			if(imageWidth <= 4096 && imageHeight <= 4096) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Converts byte array into hexadecimal String.
+	 * @param bytes
+	 *     - byte array to convert.
+	 * @return
+	 *     - hexadecimal String representation of byte array.
+	 */
+	public static String bytesToHex(byte[] bytes) {
+		char[] hexArray = "0123456789ABCDEF".toCharArray();
+	    char[] hexChars = new char[bytes.length * 2];
+	    for(int j = 0; j < bytes.length; j++) {
+	        int v = bytes[j] & 0xFF;
+	        hexChars[j * 2] = hexArray[v >>> 4];
+	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+	    }
+	    return new String(hexChars);
 	}
 }
