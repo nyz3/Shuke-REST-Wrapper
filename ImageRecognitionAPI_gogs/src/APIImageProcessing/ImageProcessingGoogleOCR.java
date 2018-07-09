@@ -2,7 +2,7 @@
  * API Testing of Google API OCR, Wrapper method for API to bypass access process. 
  */
 
-package APITesting;
+package APIImageProcessing;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
