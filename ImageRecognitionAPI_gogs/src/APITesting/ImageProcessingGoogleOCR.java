@@ -20,7 +20,7 @@ import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 
-public class APITestingGoogleOCR {
+public class ImageProcessingGoogleOCR {
 	
 	/**
 	 * Main method used for testing method calls only. Delete when finished.
