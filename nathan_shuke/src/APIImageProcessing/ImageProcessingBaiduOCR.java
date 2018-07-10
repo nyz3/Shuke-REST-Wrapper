@@ -60,7 +60,7 @@ public class ImageProcessingBaiduOCR {
 			return true;
 		}
 	}
-	//
+	
 	/**
 	 * 2. Find the size of the photo to prevent excessive uploads (max. 4 megabytes).
 	 * @return
