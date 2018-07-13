@@ -1,4 +1,4 @@
-package APIImageProcessing;
+package main;
 
 import java.awt.Image;
 import java.io.ByteArrayInputStream;

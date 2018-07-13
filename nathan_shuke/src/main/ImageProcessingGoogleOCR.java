@@ -1,4 +1,4 @@
-package APIImageProcessing;
+package main;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

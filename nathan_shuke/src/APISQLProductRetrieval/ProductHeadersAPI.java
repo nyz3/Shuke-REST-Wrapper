@@ -44,18 +44,24 @@ public class ProductHeadersAPI {
             // This will load the MySQL driver, each DB has its own driver
 	    	new Driver();
             // Setup the connection with the DB
-            connect = DriverManager.getConnection("jdbc:mysql://localhost/feedback?" + "user=sqluser&password=sqluserpw");
+	    	connect = DriverManager.getConnection("jdbc:mysql://60.205.209.93/feedback?" + "user=kc&password=kc");
+
+         //   connect = DriverManager.getConnection("jdbc:mysql://localhost/feedback?" + "user=sqluser&password=sqluserpw");
             // Statements allow to issue SQL queries to the database
          //   statement = connect.createStatement();
             // Result set get the result of the SQL query
          //   resultSet = statement.executeQuery("select * from feedback.comments");
 
         } catch (Exception e) {
+        	
             throw e;
+            
         } finally {
+        	
             resultSet.close();
             preparedStatement.close();
             connect.close();
+            
         }
 	    
 		return resultJSON;
