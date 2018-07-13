@@ -19,7 +19,14 @@ import javax.json.JsonObject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-//complete path: http://localhost:8080/ImageRecognitionAPI_gogs/rest/GoogleOCRSanHaoWang?apiKey=sanhao123
+/**
+ * Class containing middleman POST API for calling the Google OCR. API to be hosted on Hong Kong servers in order to bypass
+ * firewall in order to call the Google API.
+ * 
+ * @author Nathan Zheng
+ *
+ */
+//complete path: http://localhost:8080/nathan_shuke_gogs/rest/GoogleOCRSanHaoWang?apiKey=sanhao123
 @Path("/GoogleOCRSanHaoWang")
 public class GoogleOCRHttpServlet {
 	

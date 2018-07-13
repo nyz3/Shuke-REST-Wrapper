@@ -1,8 +1,3 @@
-/**
- * Image Processing for the BaiduOCRAPI to ensure image files submitted adhere to API requirements to prevent
- * failed API calls and reduce associated costs.
- */
-
 package APIImageProcessing;
 
 import java.awt.Image;
@@ -14,6 +9,13 @@ import javax.imageio.ImageIO;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Image Processing for the BaiduOCRAPI to ensure image files submitted adhere to API requirements to prevent
+ * failed API calls and reduce associated costs.
+ * 
+ * @author Nathan Zheng
+ * 
+ */
 public class ImageProcessingBaiduOCR {
 	
 	private static byte[] imageBytes;	//Byte Array representation of image to process.

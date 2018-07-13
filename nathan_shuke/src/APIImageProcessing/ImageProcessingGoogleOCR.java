@@ -1,7 +1,3 @@
-/**
- * API Testing of Google API OCR, Wrapper method for API to bypass access process. 
- */
-
 package APIImageProcessing;
 
 import java.io.BufferedReader;
@@ -20,6 +16,13 @@ import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 
+/**
+ * Helper class to process image-encoding before calling Google API, in order to minimize failed API calls and 
+ * associated costs.
+ * 
+ * @author Nathan Zheng
+ * 
+ */
 public class ImageProcessingGoogleOCR {
 	
 	/**

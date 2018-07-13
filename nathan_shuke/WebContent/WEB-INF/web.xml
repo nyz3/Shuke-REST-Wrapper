@@ -12,6 +12,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ImageRecognitionAPI</servlet-name>
+    <!-- /rest/ comes right after the name of the project we are accessing, e.g http://localhost:8080/nathan_shuke_gogs/rest/ProductHeaders -->
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 </web-app>
