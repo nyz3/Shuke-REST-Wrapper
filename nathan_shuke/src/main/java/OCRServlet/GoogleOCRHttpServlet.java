@@ -1,4 +1,4 @@
-package OCRServlet;
+package main.java.OCRServlet;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

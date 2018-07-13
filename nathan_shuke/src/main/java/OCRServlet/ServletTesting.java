@@ -1,4 +1,4 @@
-package OCRServlet;
+package main.java.OCRServlet;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

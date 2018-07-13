@@ -1,4 +1,4 @@
-package APISQLProductRetrieval;
+package main.java.SQLProductRetrievalAPIs;
 
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;

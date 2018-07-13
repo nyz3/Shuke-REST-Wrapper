@@ -1,4 +1,4 @@
-package main;
+package main.java.ImageRecognitionAPIs;
 
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
@@ -73,6 +73,11 @@ public class ImageProcessingBaiduOCR {
 		double numBytes = imageBytes.length;
 		if((numBytes / 1048576) > 4) {
 			System.out.println("File size exceeds 4 megabytes (MB), please reduce size.");
+			
+			//COMPRESS IMAGE
+			
+			
+			
 			return false;
 		} else {
 			return true;

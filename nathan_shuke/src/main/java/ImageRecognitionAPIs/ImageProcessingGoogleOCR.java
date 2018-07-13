@@ -1,4 +1,4 @@
-package main;
+package main.java.ImageRecognitionAPIs;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

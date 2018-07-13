@@ -1,4 +1,4 @@
-package APISQLProductRetrieval;
+package main.java.SQLProductRetrievalAPIs;
 
 /**
  * Temporary class used to test effectiveness/accuracy of Product APIs that retrieve data from SQL database.
