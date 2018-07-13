@@ -141,10 +141,9 @@ public class ImageProcessingBaiduOCR {
 		jpgWriter.dispose();
 		
 	//	return compressed byte array
-		byte[] compressedImageBytes = null;
+		byte[] compressedImageBytes = compressedByteStream.toByteArray();
 		
 		return compressedImageBytes;
-		
 	}
 	
 	/**
