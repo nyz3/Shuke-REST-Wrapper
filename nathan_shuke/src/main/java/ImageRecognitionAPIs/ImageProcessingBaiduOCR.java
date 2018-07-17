@@ -88,7 +88,7 @@ public class ImageProcessingBaiduOCR {
 	 * @param image
 	 * @return byte[] holding compressed image information.
 	 */
-	public static byte[] compressImage(MultipartFile image) {
+	public static byte[] compressImage(MultipartFile image) {  
 		
 		try {
 			imageBytes = image.getBytes();
@@ -108,7 +108,7 @@ public class ImageProcessingBaiduOCR {
 		jpgWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 		
 		//Compression quality expressed as a float (currently compress to 70%)
-		jpgWriteParam.setCompressionQuality(0.7f);
+		jpgWriteParam.setCompressionQuality(0.5f);
 		
 		//read compressed image data into compressedBytes ByteArray stream
 		ByteArrayOutputStream compressedByteStream = new ByteArrayOutputStream();
