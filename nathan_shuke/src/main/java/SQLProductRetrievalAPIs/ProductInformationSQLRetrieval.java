@@ -17,6 +17,9 @@ import com.mysql.cj.jdbc.Driver;
 
 public class ProductInformationSQLRetrieval {
 	
+	//CAN LIKELY FACTOR OUT COMMON FUNCTIONALITIES BETWEEN METHODS: Connection, Query execution (query as parameter), 
+	//processing results, closing connections,etc.
+	
 	/**
 	 * This method returns results of a JDBC SQLQuery that represents all the product categories.
 	 * 
@@ -56,7 +59,7 @@ public class ProductInformationSQLRetrieval {
 		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
 		        while (resultSet.next()) {
 		        	//iterate each row by column.
-		        	for(int colIndex = 1; colIndex < resultSet.getMetaData().getColumnCount(); colIndex++) {
+		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
 		        		results.add(resultSet.getString(colIndex));
 		        	}
 		            rowIndex++;
@@ -79,10 +82,54 @@ public class ProductInformationSQLRetrieval {
 	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
 	 * @throws Exception
 	 */
-	public static String getCategoryProducts(String category) throws Exception {
+	public static ArrayList<String> getCategoryProducts(String category) throws Exception {
 		
-		return null;
-		
+		Connection connect = null;
+		//address of the SQL database containing all the tables, database access username, password.
+		String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
+        String username = "kc";
+        String password = "kc";
+        
+        //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
+        //by automatically escaping special SQL keywords.
+        PreparedStatement query = null;
+        String queryText = "SELECT * FROM tb_goods_class"; //QUERY COMMAND GOES HERE
+        ResultSet resultSet = null;
+        ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
+        
+        //Execute query and fetch/return results.
+        try {
+	        	// This will load the MySQL driver, each DB has its own driver class instance
+		        new Driver();
+		        // Setup the connection with the DB
+		        connect = DriverManager.getConnection(databaseURL, username, password);
+		        //TESTING
+		        System.out.println("Connection established.");
+		        //prepare query command to be executed over the connection to database
+		        query = connect.prepareStatement(queryText);
+		        //execute query, and store query results in resultSet
+		        resultSet = query.executeQuery();
+		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
+		        int rowIndex = 1;	//index to parse all columns of resultSet, starts from 1 not 0
+		        //parses through the resultSet and prints out the String representation of each datapiece column by column
+		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
+		        while (resultSet.next()) {
+		        	//iterate each row by column.
+		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
+		        		results.add(resultSet.getString(colIndex));
+		        	}
+		            rowIndex++;
+		        }
+        	} catch (Exception e) {
+        		System.out.print("Error : " + e.getMessage());
+        	} finally {
+        		//close all connections and streams
+        		resultSet.close();
+                query.close();
+                connect.close();
+        	}
+        
+        return results;
 	}
 	
 	/**
@@ -91,10 +138,53 @@ public class ProductInformationSQLRetrieval {
 	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
 	 * @throws Exception
 	 */
-	public static String getProductInfo(String product) throws Exception {
+	public static ArrayList<String> getProductInfo(String product) throws Exception {
 		
-		return null;
-		
+		Connection connect = null;
+		//address of the SQL database containing all the tables, database access username, password.
+		String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
+        String username = "kc";
+        String password = "kc";
+        
+        //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
+        //by automatically escaping special SQL keywords.
+        PreparedStatement query = null;
+        String queryText = "SELECT * FROM tb_goods_class"; //QUERY COMMAND GOES HERE
+        ResultSet resultSet = null;
+        ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
+        
+        //Execute query and fetch/return results.
+        try {
+	        	// This will load the MySQL driver, each DB has its own driver class instance
+		        new Driver();
+		        // Setup the connection with the DB
+		        connect = DriverManager.getConnection(databaseURL, username, password);
+		        //TESTING
+		        System.out.println("Connection established.");
+		        //prepare query command to be executed over the connection to database
+		        query = connect.prepareStatement(queryText);
+		        //execute query, and store query results in resultSet
+		        resultSet = query.executeQuery();
+		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
+		        int rowIndex = 1;	//index to parse all columns of resultSet, starts from 1 not 0
+		        //parses through the resultSet and prints out the String representation of each datapiece column by column
+		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
+		        while (resultSet.next()) {
+		        	//iterate each row by column.
+		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
+		        		results.add(resultSet.getString(colIndex));
+		        	}
+		            rowIndex++;
+		        }
+        	} catch (Exception e) {
+        		System.out.print("Error : " + e.getMessage());
+        	} finally {
+        		//close all connections and streams
+        		resultSet.close();
+                query.close();
+                connect.close();
+        	}
+        
+        return results;	
 	}
-	
 }
