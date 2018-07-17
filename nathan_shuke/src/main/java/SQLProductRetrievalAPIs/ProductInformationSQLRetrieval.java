@@ -1,14 +1,5 @@
 package main.java.SQLProductRetrievalAPIs;
 
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,26 +10,42 @@ import java.util.Date;
 import com.mysql.jdbc.Driver;
 
 /**
- * This class represents an API dedicated towards retrieving product category headers from the SQLServer and presenting data
- * for the front-end for mobile display purposes.
+ * This class is dedicated towards retrieving product category headers and product information/details from the SQLServer and presenting data
+ * for the front-end for mobile display purposes using JDBC and SQL queries.
  * 
  * @author Nathan Zheng
  *
  */
-//complete path: http://localhost:8080/nathan_shuke_gogs/rest/ProductHeaders
-@Path("/ProductHeaders")
-public class ProductHeadersAPI {
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)  //returns query result in JSON format
-	public String textDetect() throws Exception {
+public class ProductInformationSQLRetrieval {
+
+	public String productHeaders() throws Exception {
 		
+		Connection conn = null;
+		String url = "jdbc:mysql://localhost:3306/db_name";
+        String driver = "com.mysql.jdbc.Driver";
+        String userName = "root";
+        String password = "";
+        try {
+        Class.forName(driver);
+        conn = DriverManager.getConnection(url,userName,password);
+        System.out.print("Connection estd");
+        Statement st = conn.createStatement();
+        st.executeQuery("insert into table_name values(2, 'testing');");
+        } catch (Exception e) {
+            System.out.print("Error : " +e.getMessage());
+        } finally {
+        	
+        }
+        
+        // break 
+        
+        
 		Connection connect = null;
 //	    Statement statement = null;
 	    PreparedStatement preparedStatement = null; //preparedStatement allows for dynamic SQLQuery creation
 	    ResultSet resultSet = null;
 	    
-	    String resultJSON = null;    //result from SQLQuery in JSON format
 	    
 	    try {
             // This will load the MySQL driver, each DB has its own driver
@@ -64,7 +71,21 @@ public class ProductHeadersAPI {
             
         }
 	    
-		return resultJSON;
+		return null;
 		
 	}
+
+	
+	public String getCategoryProducts(String category) throws Exception {
+		
+		return null;
+		
+	}
+	
+	public String getProductInfo(String product) throws Exception {
+		
+		return null;
+		
+	}
+	
 }
