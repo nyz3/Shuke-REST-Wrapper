@@ -37,7 +37,7 @@ public class ProductInformationSQLRetrieval {
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
-        String queryText = "SELECT * FROM tb_goods_class"; //QUERY COMMAND GOES HERE
+        String queryText = "SELECT name FROM tb_goods_class"; //QUERY COMMAND GOES HERE
         ResultSet resultSet = null;
         ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
         
@@ -77,7 +77,7 @@ public class ProductInformationSQLRetrieval {
 	}
         
 	/**
-	 * This method returns results of a JDBC SQLQuery that represents all the product categories.
+	 * This method returns results of a JDBC SQLQuery that represents all the products within a specified category
 	 * 
 	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
 	 * @throws Exception
@@ -93,7 +93,7 @@ public class ProductInformationSQLRetrieval {
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
-        String queryText = "SELECT * FROM tb_goods_class"; //QUERY COMMAND GOES HERE
+        String queryText = "SELECT * FROM tb_goods"; //QUERY COMMAND GOES HERE
         ResultSet resultSet = null;
         ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
         
