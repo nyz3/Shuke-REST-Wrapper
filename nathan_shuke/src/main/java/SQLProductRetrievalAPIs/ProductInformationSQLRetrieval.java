@@ -54,7 +54,6 @@ public class ProductInformationSQLRetrieval {
 		        //execute query, and store query results in resultSet
 		        resultSet = query.executeQuery();
 		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
-		        int rowIndex = 1;	//index to parse all columns of resultSet, starts from 1 not 0
 		        //parses through the resultSet and prints out the String representation of each datapiece column by column
 		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
 		        while (resultSet.next()) {
@@ -62,7 +61,6 @@ public class ProductInformationSQLRetrieval {
 		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
 		        		results.add(resultSet.getString(colIndex));
 		        	}
-		            rowIndex++;
 		        }
         	} catch (Exception e) {
         		System.out.print("Error : " + e.getMessage());
@@ -93,7 +91,10 @@ public class ProductInformationSQLRetrieval {
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
-        String queryText = "SELECT * FROM tb_goods"; //QUERY COMMAND GOES HERE
+        //? is a parameter placeholder for safety reasons (parameter inserted below), specifically to protect against SQL injections.
+        String queryText = "SELECT goods_name, mer_name, goods_price, goods_promotion_price, "
+        		+ "goods_original_price, goods_image FROM tb_goods WHERE goods_class_id IN "
+        		+ "(SELECT id FROM tb_goods_class WHERE name = ?)"; //QUERY COMMAND GOES HERE
         ResultSet resultSet = null;
         ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
         
@@ -107,10 +108,11 @@ public class ProductInformationSQLRetrieval {
 		        System.out.println("Connection established.");
 		        //prepare query command to be executed over the connection to database
 		        query = connect.prepareStatement(queryText);
+		        //Places category parameter into query request (replaces the first '?')
+		        query.setString(1, category);
 		        //execute query, and store query results in resultSet
 		        resultSet = query.executeQuery();
 		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
-		        int rowIndex = 1;	//index to parse all columns of resultSet, starts from 1 not 0
 		        //parses through the resultSet and prints out the String representation of each datapiece column by column
 		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
 		        while (resultSet.next()) {
@@ -118,7 +120,6 @@ public class ProductInformationSQLRetrieval {
 		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
 		        		results.add(resultSet.getString(colIndex));
 		        	}
-		            rowIndex++;
 		        }
         	} catch (Exception e) {
         		System.out.print("Error : " + e.getMessage());
@@ -133,7 +134,7 @@ public class ProductInformationSQLRetrieval {
 	}
 	
 	/**
-	 * This method returns results of a JDBC SQLQuery that represents all the product categories.
+	 * This method returns results of a JDBC SQLQuery that represents all the information about a specific product.
 	 * 
 	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
 	 * @throws Exception
@@ -166,7 +167,6 @@ public class ProductInformationSQLRetrieval {
 		        //execute query, and store query results in resultSet
 		        resultSet = query.executeQuery();
 		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
-		        int rowIndex = 1;	//index to parse all columns of resultSet, starts from 1 not 0
 		        //parses through the resultSet and prints out the String representation of each datapiece column by column
 		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
 		        while (resultSet.next()) {
@@ -174,7 +174,6 @@ public class ProductInformationSQLRetrieval {
 		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
 		        		results.add(resultSet.getString(colIndex));
 		        	}
-		            rowIndex++;
 		        }
         	} catch (Exception e) {
         		System.out.print("Error : " + e.getMessage());

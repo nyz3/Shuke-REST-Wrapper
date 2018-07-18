@@ -19,7 +19,7 @@ public class TestingSQLAPI {
 			System.out.println(temp.get(x)); 
 		} */
 		
-		ArrayList<String> temp = ProductInformationSQLRetrieval.getCategoryProducts(null);
+		ArrayList<String> temp = ProductInformationSQLRetrieval.getCategoryProducts("充值卡");
 		for(int x = 0; x < temp.size(); x++) {
 			System.out.println(temp.get(x));
 		}
