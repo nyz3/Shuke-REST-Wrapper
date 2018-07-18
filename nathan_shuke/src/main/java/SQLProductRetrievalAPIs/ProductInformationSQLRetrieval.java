@@ -219,13 +219,4 @@ public class ProductInformationSQLRetrieval {
         
         return results;	
 	}
-	
-	
-	public static void helper1() {
-		
-	}
-	
-	//start is all similar up to the 'try'. In total we write two helper methods, one that factors all the connection details,
-	//and another that takes in query strings, and returns resultSets, processing of resultSet is unique and thus reside
-	//in the unique method themselves. Also keep in mind that 
 }
