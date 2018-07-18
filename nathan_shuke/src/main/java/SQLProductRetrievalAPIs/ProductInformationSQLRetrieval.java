@@ -157,10 +157,10 @@ public class ProductInformationSQLRetrieval {
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
         //Query for Product Info, limit to first match(prevent duplicates)*
-        String queryProductInfo = "SELECT TOP 1 * FROM tb_goods WHERE goods_name = ?";
+        String queryProductInfo = "SELECT * FROM tb_goods WHERE goods_name = ? LIMIT 1";
         //Query for product's Merchant Info, limit to first match(prevent duplicates)*
-        String queryMerchantInfo = "SELECT TOP 1 * FROM tb_mer_info WHERE name IN (SELECT mer_name FROM tb_goods"
-        		+ "WHERE goods_name = ?)"; 
+        String queryMerchantInfo = "SELECT * FROM tb_mer_info WHERE name IN (SELECT mer_name FROM tb_goods"
+        		+ " WHERE goods_name = ?) LIMIT 1"; 
         ResultSet resultSet = null;
         ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>(); //results to be organized from query for return
         
