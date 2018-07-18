@@ -15,15 +15,7 @@ import com.mysql.cj.jdbc.Driver;
  *
  */
 
-//Re-factoring methods, work in progress. There are subtle differences with how data is displayed in each method above
-//that makes current refactoring difficult while others are using software. Will modify at a later date. (At bottom)
-
 public class ProductInformationSQLRetrieval {
-	
-	//address of the SQL database containing all the tables, database access username, password.
-	private final static String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
-    private final static String username = "kc";
-    private final static String password = "kc";
 	
 	/**
 	 * This method returns results of a JDBC SQLQuery that represents all the product categories.
@@ -35,6 +27,11 @@ public class ProductInformationSQLRetrieval {
 	public static ArrayList<ArrayList<String>> productHeaders() throws Exception {
 		
 		Connection connect = null;
+		//address of the SQL database containing all the tables, database access username, password.
+		String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
+        String username = "kc";
+        String password = "kc";
+        
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
@@ -87,6 +84,11 @@ public class ProductInformationSQLRetrieval {
 	public static ArrayList<ArrayList<String>> getCategoryProducts(String category) throws Exception {
 		
 		Connection connect = null;
+		//address of the SQL database containing all the tables, database access username, password.
+		String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
+        String username = "kc";
+        String password = "kc";
+        
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
@@ -146,6 +148,11 @@ public class ProductInformationSQLRetrieval {
 	public static ArrayList<ArrayList<String>> getProductInfo(String product) throws Exception {
 		
 		Connection connect = null;
+		//address of the SQL database containing all the tables, database access username, password.
+		String databaseURL = "jdbc:mysql://60.205.209.93/kc?useSSL=false";  
+        String username = "kc";
+        String password = "kc";
+        
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
@@ -216,67 +223,34 @@ public class ProductInformationSQLRetrieval {
         return results;	
 	}
 	
-	
-	
-	//Re-factoring, work in progress. There are subtle differences with how data is displayed in each method above
-	//that makes current refactoring difficult while others are using software. Will modify at a later date.
 	/**
 	 * 
 	 * @param queries
 	 */
-/*	public static void getSQLInfo(PreparedStatement[] queries) {
+	public static void getSQLInfo(String[] queries) {
 		
-		Connection connect = null;
-        ResultSet resultSet = null;
-        ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>(); //results to be organized from query for return
-        
-        //Execute query and fetch/return results.
-        try {
-	        	// This will load the MySQL driver, each DB has its own driver class instance
-		        new Driver();
-		        // Setup the connection with the DB
-		        connect = DriverManager.getConnection(databaseURL, username, password);
-		        //TESTING
-		        System.out.println("Connection established.");
-		        
-		        for(int queryIndex = 0; queryIndex < queries.length; queryIndex++) {
-		        	
-			        //execute query, and store query results in resultSet
-			        resultSet = queries[queryIndex].executeQuery();
-			        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
-			        //parses through the resultSet and prints out the String representation of each datapiece column by column
-			        //ResultSet.next iterates by row. Call get(index) to access items in each row.
-			        while (resultSet.next()) {
-			        	ArrayList<String> info = new ArrayList<String>();
-			        	//iterate row by column (one columns per row - done for refactoring purposes)
-			        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
-			        		info.add(resultSet.getString(colIndex));
-			        	}
-			        	results.add(info);
-			        }
-			        queryIndex++;
-		        }
-        	} catch (Exception e) {
-        		System.out.print("Error : " + e.getMessage());
-        	} finally {
-        		//close all connections and streams
-        		resultSet.close();
-                query.close();
-                connect.close();
-        	}
-        
-        return results;
+		return;
 		
-	}*/
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static ArrayList<String> appendToResults() {
+		
+		return null;
+		
+	}
 	
 	/**
 	 * 
 	 * @param data
 	 * @return
 	 */
-/*	public static String displayData(ArrayList<ArrayList<String>> data) {
+	public static String displayData(ArrayList<ArrayList<String>> data) {
 		
 		return null;
 		
-	}	*/
+	}	
 }

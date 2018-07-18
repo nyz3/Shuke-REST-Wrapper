@@ -13,10 +13,11 @@ public class TestingSQLAPI {
 	
 	public static void main (String args[]) throws Exception {
 		
-		ArrayList<String> temp = ProductInformationSQLRetrieval.productHeaders();
-		for(int x = 0; x < temp.size(); x++) {
-			System.out.println(temp.get(x)); 
-		} 
+		ArrayList<ArrayList<String>> temp = ProductInformationSQLRetrieval.productHeaders();
+		ArrayList<String> productList = temp.get(0);
+		for(int x = 0; x < productList.size(); x++) {
+			System.out.print(productList.get(x) + " ");
+		}
 		
 		System.out.println();
 		
