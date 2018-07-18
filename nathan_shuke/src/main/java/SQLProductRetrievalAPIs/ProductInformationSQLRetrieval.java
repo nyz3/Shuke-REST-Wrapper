@@ -77,10 +77,11 @@ public class ProductInformationSQLRetrieval {
 	/**
 	 * This method returns results of a JDBC SQLQuery that represents all the products within a specified category
 	 * 
-	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
+	 * @return results - ArrayList<ArrayList<String>> containing all results from query in a custom-organized fashion.
+	 * Each nested ArrayList represents a row in the table (a product) and the nested elements are the properties.
 	 * @throws Exception
 	 */
-	public static ArrayList<String> getCategoryProducts(String category) throws Exception {
+	public static ArrayList<ArrayList<String>> getCategoryProducts(String category) throws Exception {
 		
 		Connection connect = null;
 		//address of the SQL database containing all the tables, database access username, password.
@@ -94,9 +95,9 @@ public class ProductInformationSQLRetrieval {
         //? is a parameter placeholder for safety reasons (parameter inserted below), specifically to protect against SQL injections.
         String queryText = "SELECT goods_name, mer_name, goods_price, goods_promotion_price, "
         		+ "goods_original_price, goods_image FROM tb_goods WHERE goods_class_id IN "
-        		+ "(SELECT id FROM tb_goods_class WHERE name = ?)"; //QUERY COMMAND GOES HERE
+        		+ "(SELECT id FROM tb_goods_class WHERE name = ?)"; 
         ResultSet resultSet = null;
-        ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
+        ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>(); //results to be organized from query for return
         
         //Execute query and fetch/return results.
         try {
@@ -116,10 +117,13 @@ public class ProductInformationSQLRetrieval {
 		        //parses through the resultSet and prints out the String representation of each datapiece column by column
 		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
 		        while (resultSet.next()) {
-		        	//iterate each row by column.
+		        	//iterate each row by column, and store row info in productInfo.
+		        	ArrayList<String> productInfo = new ArrayList<String>();
 		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
-		        		results.add(resultSet.getString(colIndex));
+		        		productInfo.add(resultSet.getString(colIndex));
 		        	}
+		        	//after each row, add resulting ArrayList with each product info in the overall product ArrayList.
+		        	results.add(productInfo);
 		        }
         	} catch (Exception e) {
         		System.out.print("Error : " + e.getMessage());
@@ -135,11 +139,13 @@ public class ProductInformationSQLRetrieval {
 	
 	/**
 	 * This method returns results of a JDBC SQLQuery that represents all the information about a specific product.
+	 * The first ArrayList represents info about the product specifically. The second ArrayList represents info
+	 * about the corresponding merchant selling the product.
 	 * 
 	 * @return results - ArrayList<String> containing all results from query in a custom-organized fashion.
 	 * @throws Exception
 	 */
-	public static ArrayList<String> getProductInfo(String product) throws Exception {
+	public static ArrayList<ArrayList<String>> getProductInfo(String product) throws Exception {
 		
 		Connection connect = null;
 		//address of the SQL database containing all the tables, database access username, password.
@@ -150,9 +156,13 @@ public class ProductInformationSQLRetrieval {
         //query contains the SQLquery to be executed, PreparedStatement protects against SQL injection attacks
         //by automatically escaping special SQL keywords.
         PreparedStatement query = null;
-        String queryText = "SELECT * FROM tb_goods_class"; //QUERY COMMAND GOES HERE
+        //Query for Product Info, limit to first match(prevent duplicates)*
+        String queryProductInfo = "SELECT TOP 1 * FROM tb_goods WHERE goods_name = ?";
+        //Query for product's Merchant Info, limit to first match(prevent duplicates)*
+        String queryMerchantInfo = "SELECT TOP 1 * FROM tb_mer_info WHERE name IN (SELECT mer_name FROM tb_goods"
+        		+ "WHERE goods_name = ?)"; 
         ResultSet resultSet = null;
-        ArrayList<String> results = new ArrayList<String>(); //results to be organized from query for return
+        ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>(); //results to be organized from query for return
         
         //Execute query and fetch/return results.
         try {
@@ -163,18 +173,44 @@ public class ProductInformationSQLRetrieval {
 		        //TESTING
 		        System.out.println("Connection established.");
 		        //prepare query command to be executed over the connection to database
-		        query = connect.prepareStatement(queryText);
+		        query = connect.prepareStatement(queryProductInfo);
+		        //fill question mark placeholder in queryProductInfo with the product name
+		        query.setString(1, product);
 		        //execute query, and store query results in resultSet
 		        resultSet = query.executeQuery();
 		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
 		        //parses through the resultSet and prints out the String representation of each datapiece column by column
-		        //ResultSet.next iterates by row. Call get(index) to access items in each row.
-		        while (resultSet.next()) {
-		        	//iterate each row by column.
+		        //There should be only one unique row for the product parameter, thus use if to check if there exists one
+		        //and only one row of productInfo.
+		        if(resultSet.next()) {
+		        	//iterate each row by column, and store row info in info. First productInfo then corresponding merchantInfo.
+		        	ArrayList<String> productInfo = new ArrayList<String>();
 		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
-		        		results.add(resultSet.getString(colIndex));
+		        		productInfo.add(resultSet.getString(colIndex));
 		        	}
+		        	//after each row, add resulting ArrayList with each product info in the overall product ArrayList.
+		        	results.add(productInfo);
 		        }
+		        
+		        //Prepare query for retrieval of corresponding merchant info.
+		        query = connect.prepareStatement(queryMerchantInfo);
+		        //fill question mark placeholder in queryMerchantInfo with the product name
+		        query.setString(1, product);
+		        //execute query, and store query results in resultSet
+		        resultSet = query.executeQuery();
+		        //PROCESS resultSet and return data in a easily accessible and organized manner for display.
+		        //parses through the resultSet and prints out the String representation of each datapiece column by column
+		        //There should be only one unique merchant for the product parameter, thus use if to check if there exists one
+		        //and only one row of merchantInfo.
+		        if(resultSet.next()) {
+		        	//iterate each row by column, and store row info in info. First productInfo then corresponding merchantInfo.
+		        	ArrayList<String> merchantInfo = new ArrayList<String>();
+		        	for(int colIndex = 1; colIndex <= resultSet.getMetaData().getColumnCount(); colIndex++) {
+		        		merchantInfo.add(resultSet.getString(colIndex));
+		        	}
+		        	//after each row, add resulting ArrayList with each product info in the overall product ArrayList.
+		        	results.add(merchantInfo);
+		        }    		
         	} catch (Exception e) {
         		System.out.print("Error : " + e.getMessage());
         	} finally {

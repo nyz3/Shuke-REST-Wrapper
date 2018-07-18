@@ -13,16 +13,31 @@ public class TestingSQLAPI {
 	
 	public static void main (String args[]) throws Exception {
 		
-/*
 		ArrayList<String> temp = ProductInformationSQLRetrieval.productHeaders();
 		for(int x = 0; x < temp.size(); x++) {
 			System.out.println(temp.get(x)); 
-		} */
+		} 
 		
-		ArrayList<String> temp = ProductInformationSQLRetrieval.getCategoryProducts("充值卡");
-		for(int x = 0; x < temp.size(); x++) {
-			System.out.println(temp.get(x));
+		System.out.println();
+		
+		ArrayList<ArrayList<String>> temp1 = ProductInformationSQLRetrieval.getCategoryProducts("充值卡");
+		for(int x = 0; x < temp1.size(); x++) {
+			ArrayList<String> temp2 = temp1.get(x);
+			for(int y = 0; y < temp2.size(); y++) {
+				System.out.print(temp2.get(y)+" ");
+			}
 		}
+		
+		System.out.println();
+		
+		ArrayList<ArrayList<String>> temp3 = ProductInformationSQLRetrieval.getProductInfo("充值卡");
+		for(int x = 0; x < temp1.size(); x++) {
+			ArrayList<String> temp2 = temp1.get(x);
+			for(int y = 0; y < temp2.size(); y++) {
+				System.out.print(temp2.get(y)+" ");
+			}
+		}
+		
 	
 	}
 
