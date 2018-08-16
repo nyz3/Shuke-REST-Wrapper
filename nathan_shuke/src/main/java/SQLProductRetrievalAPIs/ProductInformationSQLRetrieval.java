@@ -16,7 +16,7 @@ import com.mysql.cj.jdbc.Driver;
  */
 
 //Re-factoring methods, work in progress. There are subtle differences with how data is displayed in each method above
-//that makes current refactoring difficult while others are using software. Will modify at a later date. (At bottom)
+//that makes current re-factoring difficult while others are using software. Will modify at a later date. (At bottom)
 
 public class ProductInformationSQLRetrieval {
 	
